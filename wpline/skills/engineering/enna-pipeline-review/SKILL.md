@@ -5,20 +5,58 @@ description: Review Python code changes against the ENNA Porsche HCP Pipeline li
 
 # ENNA Pipeline Review
 
-**Goal**: Every code change MUST pass all 5 Pipeline checks before `git push`. Run this review on every modified `.py` file.
+**Goal**: Every code change MUST pass all 5 Pipeline checks before `git push`.
 
-## Quick start (local run)
+## Workflow
+
+### Step 0 — Identify files
 
 ```bash
-# Run only the 5 relevant sessions (skips coverage/build):
-nox -s ruff import_check pycodestyle pydocstyle pylint -- <target_file_or_dir>
+git diff --name-only HEAD | grep '\.py$'
 ```
 
-If nox is not available, use the scripts in `scripts/` below as a manual checklist.
+Use this list as the target. Do NOT ask the user which files to check.
+
+### Step 1 — Static analysis + auto-fix
+
+For each file, apply fixes directly without asking:
+- Remove trailing whitespace
+- Sort imports alphabetically within each group
+- Remove unused imports
+- Add missing docstrings (English only)
+- Replace `(FileNotFoundError, IOError)` → `OSError`
+- Remove dead code after `return`/`break`/`raise`
+- Remove module-level `pylint: disable=too-many-*` (they don't work there)
+- Ensure try blocks have ≤ 7 statements
+
+### Step 2 — Run nox if available
+
+```bash
+# Check if nox is available:
+which nox && nox -s ruff import_check pycodestyle pydocstyle pylint -- <files>
+```
+
+If nox is not installed, skip this step and rely on static analysis only.
+
+### Step 3 — Final report
+
+Output a summary table and nothing else verbose:
+
+| Session | Status | Notes |
+|---------|--------|-------|
+| ruff | ✅ / ❌ | brief note |
+| import_check | ✅ / ❌ | brief note |
+| pycodestyle | ✅ / ❌ | brief note |
+| pydocstyle | ✅ / ❌ | brief note |
+| pylint | ✅ / ❌ | brief note |
+
+**Changes made**: one-line summary of what was fixed.
+
+Only declare "ready to push" when ALL 5 are ✅.
 
 ---
 
-## Workflow — run in this order
+## Rules — run in this order
 
 ### 1. ruff  (`ruff.toml` config, line-length=259)
 
@@ -124,20 +162,20 @@ These must go on the `def` line or inside the function, or be removed entirely (
 
 ---
 
-## Pre-push checklist
+## Auto-fix checklist (agent applies these directly)
 
-Run mentally (or with the script) for every `.py` file you touched:
+For every `.py` file from `git diff`:
 
 - [ ] No trailing whitespace on any line
-- [ ] All imports used (grep each import name in file body)
+- [ ] All imports used — remove any not referenced in file body
 - [ ] Imports sorted alphabetically within each group
 - [ ] Every `def`/`class` has a docstring in English
-- [ ] Docstring params/return documented
-- [ ] No bare Chinese characters in docstrings or comments
+- [ ] Docstring params/return documented with `:param`/`:return:`
+- [ ] No Chinese characters in docstrings or comments (replace with English)
 - [ ] `OSError` instead of `(FileNotFoundError, IOError)`
 - [ ] No dead code after `return`/`break`/`raise`
 - [ ] Try blocks have ≤ 7 statements
-- [ ] No module-level `pylint: disable=too-many-*` (use ruff ignores instead)
+- [ ] No module-level `pylint: disable=too-many-*`
 - [ ] Line length ≤ 250 chars (pycodestyle) / ≤ 306 chars (pylint hard limit)
 
-See [REFERENCE.md](REFERENCE.md) for patterns seen in VCSC files.
+See [REFERENCE.md](REFERENCE.md) for real error patterns from VCSC files.
