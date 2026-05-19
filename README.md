@@ -35,8 +35,8 @@ Once installed, trigger the skill by saying any of:
 
 ### Engineering
 
-- **[enna-pipeline-review](./skills/engineering/enna-pipeline-review/SKILL.md)** — Review Python code changes against the ENNA Porsche HCP Pipeline lint rules (ruff, pylint, import_check, pycodestyle, pydocstyle) before committing or pushing.
+- **[wpline](./skills/engineering/wpline/SKILL.md)** — Review Python code changes against the ENNA Porsche HCP Pipeline lint rules (ruff, pylint, import_check, pycodestyle, pydocstyle) before committing or pushing.
 
 ## Why This Exists
 
-The ENNA Porsche HCP Pipeline runs 5 lint sessions on every push. Failing them after push wastes CI time and blocks the team. This skill runs the same checks locally — in the right order — so you catch issues before they hit the pipeline.
+The ENNA Porsche Pipeline runs 5 lint sessions on every push. Failing them after push wastes CI time and blocks the team. This skill runs the same checks locally — in the right order — so you catch issues before they hit the pipeline.

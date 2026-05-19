@@ -1,5 +1,5 @@
 ---
-name: enna-pipeline-review
+name: wpline
 description: Review Python code changes against the ENNA Porsche HCP Pipeline lint rules (ruff, pylint, import_check, pycodestyle, pydocstyle) before committing or pushing. Use when writing or modifying .py files in enna-shared-testcases or enna_porsche_core_lib, or when the user says "review before push", "check Pipeline", "lint check", or wants to avoid CI failures.
 ---
 
