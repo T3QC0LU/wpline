@@ -1,6 +1,6 @@
 # wpline
 
-My GitHub Copilot CLI skill for enforcing the ENNA Porsche HCP Pipeline lint rules — so every `.py` push passes CI on the first try.
+My GitHub Copilot CLI skill for enforcing the Gitlab Push and MR Pipeline lint rules — so every `.py` push passes CI on the first try.
 
 ## Quickstart (30-second setup)
 
@@ -10,13 +10,13 @@ My GitHub Copilot CLI skill for enforcing the ENNA Porsche HCP Pipeline lint rul
 npx skills@latest add T3QC0LU/wpline
 ```
 
-Pick `enna-pipeline-review` and select which agent to install it on.
+Pick **wpline** and select which agent to install it on.
 
 **Option 2 — manual link script:**
 
 ```bash
-git clone https://github.com/T3QC0LU/wpline.git ~/wpline/enna-pipeline-review
-cd ~/wpline/enna-pipeline-review
+git clone https://github.com/T3QC0LU/wpline.git ~/wpline
+cd ~/wpline
 bash scripts/link-skills.sh
 ```
 

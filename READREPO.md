@@ -52,6 +52,6 @@ User triggers keyword
 npx skills@latest add T3QC0LU/wpline
 
 # Manual (Mac/Linux)
-git clone https://github.com/T3QC0LU/wpline.git
-bash wpline/scripts/link-skills.sh
+git clone https://github.com/T3QC0LU/wpline.git ~/wpline
+bash ~/wpline/scripts/link-skills.sh
 ```
